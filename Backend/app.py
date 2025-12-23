@@ -1,10 +1,13 @@
 from flask import Flask, request, jsonify
 from flask_cors import CORS
 from services.emotion_service import predict_emotion
-from services.mri_service import predict_mri
+from services.image_gen_service import generate_image
+
 
 app = Flask(__name__)
 CORS(app)
+
+#hf_lKVXOjffoCNquvVLbcinswszArMwWpvwJGE
 
 @app.route("/", methods=["GET"])
 def home():
@@ -24,17 +27,12 @@ def predict():
 
     return jsonify(result)
 
-@app.route("/predict-mri", methods=["POST"])
-def predict_mri_route():
-    if "file" not in request.files:
-        return jsonify({"error": "Upload image with form-data key: file"}), 400
 
-    file = request.files["file"]
-    if file.filename == "":
-        return jsonify({"error": "No selected file"}), 400
-
-    result = predict_mri(file)
-    return jsonify(result)
+@app.route("/generate-image", methods=["POST"])
+def generate_image_route():
+    data = request.get_json(force=True)
+    prompt = data.get("prompt", "")
+    return jsonify(generate_image(prompt))
 
 
 if __name__ == "__main__":
