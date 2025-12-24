@@ -16,6 +16,9 @@ export const generateImage = (prompt) => {
   return api.post("/generate-image", { prompt });
 };
 
+export const generateCoping = (text) =>
+  api.post("/generate-coping", { text });
+
 
 
 export default api;
