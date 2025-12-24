@@ -7,7 +7,7 @@ API_KEY = os.environ.get("GROQ_API_KEY")
 if not API_KEY:
     raise RuntimeError("GROQ_API_KEY not found. Check Backend/.env file.")
 
-client = Groq(api_key=API_KEY)✏️
+client = Groq(api_key=API_KEY)
 
 def generate_coping_strategies(text: str):
     text = (text or "").strip()

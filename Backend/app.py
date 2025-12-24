@@ -12,6 +12,7 @@ from flask_cors import CORS
 from services.emotion_service import predict_emotion
 from services.image_gen_service import generate_image
 from services.coping_service import generate_coping_strategies
+from services.chat import ask_mental_health_bot
 
 app = Flask(__name__)
 CORS(app)
@@ -63,6 +64,14 @@ def generate_coping_route():
         return jsonify(result), 400
 
     return jsonify(result), 200
+
+@app.route("/chat", methods=["POST"])
+def chat_route():
+    data = request.get_json(silent=True) or {}
+    message = data.get("message", "")
+
+    reply = ask_mental_health_bot(message)
+    return jsonify({"reply": reply}), 200
 
 # -------------------- RUN --------------------
 if __name__ == "__main__":
