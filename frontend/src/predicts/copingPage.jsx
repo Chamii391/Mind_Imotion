@@ -1,6 +1,7 @@
 // src/pages/CopingPage.jsx
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+console.log(motion);
 import { 
   FaLightbulb, 
   FaPaperPlane, 
@@ -49,6 +50,7 @@ export default function CopingPage() {
       const res = await generateCoping(text);
       setStrategies(res.data.strategies || []);
     } catch (err) {
+      console.log(err);
       setError("Unable to generate strategies. Please try again.");
     } finally {
       setLoading(false);

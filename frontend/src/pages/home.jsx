@@ -1,5 +1,6 @@
 // src/pages/Home.jsx
 import { motion } from "framer-motion";
+console.log(motion);
 import { 
   FaBrain, 
   FaRobot,
@@ -10,6 +11,7 @@ import {
   FaCheck
 } from "react-icons/fa";
 import { Link } from "react-router-dom";
+import Chat from "../components/chat";
 
 const Home = () => {
   return (
@@ -532,6 +534,7 @@ const CTASection = () => {
           * This system does not provide medical diagnosis or treatment.
         </motion.p>
       </div>
+      <Chat />
     </section>
   );
 };

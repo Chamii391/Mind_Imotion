@@ -1,6 +1,7 @@
 // src/pages/ImageGenPage.jsx
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+console.log(motion);
 import { 
   FaImage, 
   FaMagic, 
@@ -43,6 +44,7 @@ export default function ImageGenPage() {
       const res = await generateImage(prompt);
       setImageUrl(res.data.image_url);
     } catch (err) {
+      console.log(err);
       setError("Unable to generate image. Please try again.");
     } finally {
       setLoading(false);

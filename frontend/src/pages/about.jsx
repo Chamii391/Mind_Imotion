@@ -1,5 +1,6 @@
 // src/pages/About.jsx
 import { motion } from "framer-motion";
+console.log(motion);
 import { 
   FaBrain, 
   FaRobot, 
@@ -10,6 +11,7 @@ import {
   FaArrowRight
 } from "react-icons/fa";
 import { Link } from "react-router-dom";
+import Chat from "../components/chat";
 
 const About = () => {
   return (
@@ -524,6 +526,7 @@ const DisclaimerSection = () => {
           </Link>
         </motion.div>
       </div>
+      <Chat />
     </section>
   );
 };

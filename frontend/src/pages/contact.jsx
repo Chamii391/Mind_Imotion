@@ -1,6 +1,7 @@
 // src/pages/ContactPage.jsx
 import { useState } from "react";
 import { motion } from "framer-motion";
+console.log(motion);
 import { 
   FaEnvelope, 
   FaLinkedin, 
@@ -14,6 +15,7 @@ import {
   FaUser,
   FaCommentDots
 } from "react-icons/fa";
+import Chat from "../components/chat";
 
 // Your social links
 const socialLinks = [
@@ -87,6 +89,7 @@ export default function ContactPage() {
       // Reset success message after 5 seconds
       setTimeout(() => setSuccess(false), 5000);
     } catch (err) {
+      console.log(err);
       setError("Failed to send message. Please try again.");
     } finally {
       setLoading(false);
@@ -420,6 +423,7 @@ export default function ContactPage() {
           </div>
         </motion.div>
       </div>
+      <Chat />
     </div>
   );
 }

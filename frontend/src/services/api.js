@@ -20,5 +20,9 @@ export const generateCoping = (text) =>
   api.post("/generate-coping", { text });
 
 
+export const sendChatMessage = (message) =>
+  api.post("/chat", { message });
+
+
 
 export default api;

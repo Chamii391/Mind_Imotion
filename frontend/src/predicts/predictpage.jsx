@@ -1,7 +1,9 @@
 // src/pages/PredictPage.jsx
 import { useState } from "react";
 import { Link, Route, Routes, useLocation } from "react-router-dom";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion"
+console.log(motion);
+
 import { 
   FaBrain, 
   FaImage, 
@@ -14,15 +16,12 @@ import {
 import SentimentalPage from "./sentimental";
 import ImageGenPage from "./image";
 import CopingPage from "./copingPage";
-
-// Import your pages
-
+import Chat from "../components/chat";  // Your existing chat component
 
 const PredictPage = () => {
   const location = useLocation();
   const [selectedFeature, setSelectedFeature] = useState(null);
 
-  // Check if we're on the main predict page or a sub-page
   const isMainPage = location.pathname === "/predict-page" || location.pathname === "/predict-page/";
 
   const features = [
@@ -96,15 +95,12 @@ const PredictPage = () => {
 
       {/* Main Content */}
       <div className="relative z-10">
-        
-        {/* Show Dashboard if on main page */}
         {isMainPage ? (
           <DashboardContent 
             features={features} 
             onSelectFeature={setSelectedFeature} 
           />
         ) : (
-          // Show Sub-page with Back Button
           <SubPageLayout features={features}>
             <Routes>
               <Route path="/sentimental" element={<SentimentalPage />} />
@@ -115,11 +111,16 @@ const PredictPage = () => {
         )}
       </div>
 
-      {/* Modal */}
+      {/* Feature Modal */}
       <FeatureModal 
         feature={selectedFeature} 
         onClose={() => setSelectedFeature(null)} 
       />
+
+      {/* ✅ YOUR CHAT COMPONENT - Fixed Position Bottom Right */}
+      <div className="fixed bottom-6 right-6 z-50">
+        <Chat />
+      </div>
     </div>
   );
 };
@@ -136,7 +137,6 @@ const DashboardContent = ({ features, onSelectFeature }) => {
         transition={{ duration: 0.6 }}
         className="text-center mb-16"
       >
-        {/* Badge */}
         <div className="inline-flex items-center gap-2 px-4 py-2 bg-white/80 backdrop-blur-sm rounded-full shadow-lg mb-6">
           <FaHeart className="text-rose-500 text-sm" />
           <span className="text-sm font-medium text-gray-600">Choose Your Support</span>
@@ -169,12 +169,10 @@ const DashboardContent = ({ features, onSelectFeature }) => {
           >
             <div className={`${feature.bgColor} rounded-3xl p-8 h-full transition-all duration-300 hover:shadow-2xl border-2 border-transparent hover:border-white`}>
               
-              {/* Icon */}
               <div className={`w-20 h-20 mx-auto rounded-2xl bg-gradient-to-br ${feature.color} flex items-center justify-center text-white shadow-xl mb-6 group-hover:scale-110 transition-transform duration-300`}>
                 <span className="text-4xl">{feature.emoji}</span>
               </div>
 
-              {/* Content */}
               <div className="text-center">
                 <h3 className="text-xl font-bold text-gray-800 mb-3">
                   {feature.title}
@@ -183,7 +181,6 @@ const DashboardContent = ({ features, onSelectFeature }) => {
                   {feature.shortDesc}
                 </p>
 
-                {/* Button */}
                 <div className={`inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r ${feature.color} text-white font-medium rounded-xl shadow-lg group-hover:shadow-xl transition-all duration-300`}>
                   Learn More
                   <FaArrowRight className="text-sm group-hover:translate-x-1 transition-transform" />
@@ -194,7 +191,6 @@ const DashboardContent = ({ features, onSelectFeature }) => {
         ))}
       </div>
 
-      {/* Bottom Note */}
       <motion.p
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
@@ -211,7 +207,6 @@ const DashboardContent = ({ features, onSelectFeature }) => {
 const SubPageLayout = ({ features, children }) => {
   const location = useLocation();
   
-  // Find current feature
   const currentFeature = features.find(f => location.pathname.includes(f.id) || 
     (location.pathname.includes("sentimental") && f.id === "sentimental") ||
     (location.pathname.includes("gen-image") && f.id === "gen-image") ||
@@ -221,12 +216,10 @@ const SubPageLayout = ({ features, children }) => {
   return (
     <div className="min-h-screen">
       
-      {/* Top Navigation Bar */}
       <div className="bg-white/80 backdrop-blur-md shadow-lg sticky top-0 z-40">
         <div className="max-w-7xl mx-auto px-6 py-4">
           <div className="flex items-center justify-between">
             
-            {/* Back Button */}
             <Link 
               to="/predict-page"
               className="flex items-center gap-2 px-4 py-2 bg-gray-100 hover:bg-gray-200 rounded-xl text-gray-700 font-medium transition-colors"
@@ -235,7 +228,6 @@ const SubPageLayout = ({ features, children }) => {
               <span>Back to Dashboard</span>
             </Link>
 
-            {/* Current Feature Badge */}
             {currentFeature && (
               <div className={`flex items-center gap-2 px-4 py-2 ${currentFeature.lightColor} rounded-xl`}>
                 <span className="text-xl">{currentFeature.emoji}</span>
@@ -243,7 +235,6 @@ const SubPageLayout = ({ features, children }) => {
               </div>
             )}
 
-            {/* Quick Navigation */}
             <div className="hidden md:flex items-center gap-2">
               {features.map((feature) => (
                 <Link
@@ -264,7 +255,6 @@ const SubPageLayout = ({ features, children }) => {
         </div>
       </div>
 
-      {/* Page Content */}
       <div className="max-w-7xl mx-auto px-6 py-8">
         {children}
       </div>
@@ -280,7 +270,6 @@ const FeatureModal = ({ feature, onClose }) => {
     <AnimatePresence>
       {feature && (
         <>
-          {/* Backdrop */}
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -289,7 +278,6 @@ const FeatureModal = ({ feature, onClose }) => {
             className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50"
           />
 
-          {/* Modal */}
           <motion.div
             initial={{ opacity: 0, scale: 0.9, y: 20 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
@@ -299,10 +287,8 @@ const FeatureModal = ({ feature, onClose }) => {
           >
             <div className="bg-white rounded-3xl shadow-2xl max-w-lg w-full max-h-[90vh] overflow-y-auto">
               
-              {/* Header */}
               <div className={`bg-gradient-to-r ${feature.color} p-6 rounded-t-3xl relative`}>
                 
-                {/* Close Button */}
                 <button
                   onClick={onClose}
                   className="absolute top-4 right-4 w-10 h-10 bg-white/20 hover:bg-white/30 rounded-full flex items-center justify-center text-white transition-colors"
@@ -310,7 +296,6 @@ const FeatureModal = ({ feature, onClose }) => {
                   <FaTimes />
                 </button>
 
-                {/* Icon & Title */}
                 <div className="text-center pt-4">
                   <div className="w-20 h-20 mx-auto bg-white/20 backdrop-blur-sm rounded-2xl flex items-center justify-center mb-4">
                     <span className="text-5xl">{feature.emoji}</span>
@@ -324,10 +309,8 @@ const FeatureModal = ({ feature, onClose }) => {
                 </div>
               </div>
 
-              {/* Body */}
               <div className="p-6">
                 
-                {/* Description */}
                 <div className="mb-6">
                   <h3 className="text-lg font-semibold text-gray-800 mb-3">
                     About This Feature
@@ -337,7 +320,6 @@ const FeatureModal = ({ feature, onClose }) => {
                   </p>
                 </div>
 
-                {/* Benefits */}
                 <div className="mb-8">
                   <h3 className="text-lg font-semibold text-gray-800 mb-3">
                     What You'll Get
@@ -360,7 +342,6 @@ const FeatureModal = ({ feature, onClose }) => {
                   </div>
                 </div>
 
-                {/* Action Buttons */}
                 <div className="flex gap-4">
                   <button
                     onClick={onClose}
